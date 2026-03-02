@@ -15,10 +15,10 @@ router.post("/signup", (req, res) => {
 
   // trouver si l'utilisateur existe déjà en BDD sinon le créer
 
-  useStore.findOne({ username: req.body.username }).then(data => {
+  User.findOne({ username: req.body.username }).then(data => {
     if (data === null) {
 
-      const hash = bcrypt.hashSync("password", 10);
+      const hash = bcrypt.hashSync(req.body.password, 10);
 
       const newUser = new User({
         username: req.body.username,
@@ -32,6 +32,12 @@ router.post("/signup", (req, res) => {
         res.json({ result: true, token: newDoc.token });
       });
     } else {
+        // Faux si utilisateur déjà crée 
+res.json({result: false, error: 'Users already Exists'});
+
+}
+  });
+});
 
 //POST /users/signin
 router.post("/signin", (req, res) => {
@@ -43,26 +49,25 @@ if(!username || !password ) {
 }
 //identification de l'utilisateur via username
 User.findOne({ username: username }).then(data => {
-    //SI utilisateur existe ET que le password correspond
-    if (data && bcrypt.compareSync(password, data.password)) {
-        //on retourne le token et le username
+    //utilisateur existe
+    if (!data) {
+        //username n'existe pas
+        return res.json({ result: false, error: "Username does not exist" });
+    }
+
+    //utilisateur existe, on vérifie le mot de passe
+    if (bcrypt.compareSync(password, data.password)) {
         res.json({ 
             result: true, 
             token: data.token,
-            username:data.username 
+            username: data.username 
         });
     } else {
-        //si utilisateur non identitfié, erreur affiché
-        res.json({ result: false, error: "User not found or incorrect password" });
+        //mdp est faux
+        res.json({ result: false, error: "Incorrect password" });
     }
 });
 });
 
-// Faux si utilisateur déjà crée 
-res.json({result: false, error: 'Users already Exists'});
-
-}
-  });
-});
-
 module.exports = router;
+

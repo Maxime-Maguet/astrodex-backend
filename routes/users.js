@@ -15,7 +15,7 @@ router.post("/signup", (req, res) => {
 
   // trouver si l'utilisateur existe déjà en BDD sinon le créer
 
-  useStore.findOne({ username: req.body.username }).then(data => {
+  User.findOne({ username: req.body.username }).then(data => {
     if (data === null) {
       const hash = bcrypt.hashSync("password", 10);
 

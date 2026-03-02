@@ -31,4 +31,18 @@ router.get("/", (req, res) => {
     });
 });
 
+router.delete("/:userId/:astreId", (req, res) => {
+  User.findByIdAndUpdate(
+    req.params.userId,
+    { $pull: { discoversAstres: req.params.astreId } },
+    { new: true },
+  )
+    .populate("discoversAstres")
+    .then((userUpdate) => {
+      if (!userUpdate) {
+        return res.json({ result: false, message: "User not find" });
+      }
+      res.json({ result: true, user: userUpdate });
+    });
+});
 module.exports = router;

@@ -53,23 +53,16 @@
     "description": "L'étoile la plus brillante du ciel nocturne, 25 fois plus lumineuse que le Soleil. Elle est en réalité un système de deux étoiles, Sirius A et Sirius B.",
     "rarity_level": "Commune",
     "magnitude": -1.46,
-    "imageUrl": "URL_CLOUDINARY_ICI"
+    "imageUrl": "https://res.cloudinary.com/dlywrsigk/image/upload/v1772451595/STScI-01EVT7Z416PH8S7BGJQZH87ARV_uaj7o1.jpg"
   },
-  {
-    "name": "Polaris",
-    "type": "Étoile",
-    "description": "Elle indique le nord géographique avec une précision de moins d'un degré. Dans 26 000 ans ce sera une autre étoile qui indiquera le nord, à cause de la précession de la Terre.",
-    "rarity_level": "Rare",
-    "magnitude": 1.98,
-    "imageUrl": "URL_CLOUDINARY_ICI"
-  },
+
   {
     "name": "Galaxie d'Andromède",
     "type": "Galaxie",
     "description": "La galaxie la plus lointaine visible à l'oeil nu, à 2,5 millions d'années-lumière. Elle fonce vers la Voie Lactée et entrera en collision avec elle dans 4,5 milliards d'années.",
     "rarity_level": "Épique",
     "magnitude": 3.4,
-    "imageUrl": "URL_CLOUDINARY_ICI"
+    "imageUrl": "https://res.cloudinary.com/dlywrsigk/image/upload/v1772453593/PIA15416_large_drrgme.jpg"
   },
   {
     "name": "Nébuleuse d'Orion",

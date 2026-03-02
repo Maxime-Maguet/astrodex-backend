@@ -31,7 +31,7 @@ router.post("/signup", (req, res) => {
 // création de l'utilisateur avec le .save()
 
       newUser.save().then(newDoc => {
-        res.json({ result: true, token: newDoc.token });
+        res.json({ result: true, token: newDoc.token, username: newDoc.username });
       });
     } else {
         // Faux si utilisateur déjà crée 

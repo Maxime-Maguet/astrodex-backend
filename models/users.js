@@ -7,7 +7,7 @@ password: String,
 token : String,
 xp : Number,
 equipement : String,
-discoversAstres : {type: mongoose.Schema.Types.ObjectId, ref : "astres"}
+discoversAstres : [{type: mongoose.Schema.Types.ObjectId, ref : "astres"}]
 
 });
 

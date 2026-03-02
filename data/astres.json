@@ -1,0 +1,91 @@
+[
+  {
+    "name": "Lune",
+    "type": "Satellite",
+    "description": "Chaque année, la Lune s'éloigne de la Terre d'environ 3,8 centimètres. C'est à peu près la vitesse à laquelle tes ongles poussent. Dans très longtemps, elle paraîtra beaucoup plus petite dans le ciel.",
+    "rarity_level": "Commune",
+    "magnitude": -12.7,
+    "imageUrl": "https://res.cloudinary.com/dlywrsigk/image/upload/v1772451253/PIA00404_large_yozmmm.jpg"
+  },
+  {
+    "name": "Venus",
+    "type": "Planète",
+    "description": "Vénus tourne sur elle-même de façon extrêmement lente. Résultat : il lui faut plus de temps pour faire un tour complet sur elle-même (un jour) que pour faire le tour du Soleil (une année).",
+    "rarity_level": "Commune",
+    "magnitude": -4.6,
+    "imageUrl": "https://res.cloudinary.com/dlywrsigk/image/upload/v1772450836/Venus_globe_ugikbw.jpg"
+  },
+  {
+    "name": "Jupiter",
+    "type": "Planète",
+    "description": "Grâce à sa gravité immense, Jupiter attire et avale de nombreuses comètes et astéroïdes qui pourraient s'écraser sur la Terre. C'est un peu notre garde du corps spatial.",
+    "rarity_level": "Commune",
+    "magnitude": -2.7,
+    "imageUrl": "https://res.cloudinary.com/dlywrsigk/image/upload/v1772450940/Jupiter_zduhza.jpg"
+  },
+  {
+    "name": "Mars",
+    "type": "Planète",
+    "description": "Mars abrite l'Olympus Mons. Il est trois fois plus haut que l'Everest et sa base est aussi large que la France. Autant dire que la randonnée y est intense.",
+    "rarity_level": "Commune",
+    "magnitude": -2.3,
+    "imageUrl": "https://res.cloudinary.com/dlywrsigk/image/upload/v1772450928/mars_2_gwguup.jpg"
+  },
+  {
+    "name": "Mercure",
+    "type": "Planète",
+    "description": "Même si elle est la plus proche du Soleil, ce n'est pas la plus chaude ! Par contre, elle n'a pas d'atmosphère pour retenir la chaleur : il y fait 430°C le jour et -180°C la nuit. Un vrai choc thermique.",
+    "rarity_level": "Commune",
+    "magnitude": -2.2,
+    "imageUrl": "https://res.cloudinary.com/dlywrsigk/image/upload/v1772450912/mercure_1_qxjcga.jpg"
+  },
+  {
+    "name": "Saturne",
+    "type": "Planète",
+    "description": "Ses magnifiques anneaux sont composés à 99% de glace d'eau. Mais attention, ils disparaissent ! Ils sont lentement aspirés par la gravité de la planète et auront probablement disparu dans 100 millions d'années.",
+    "rarity_level": "Rare",
+    "magnitude": -0.4,
+    "imageUrl": "https://res.cloudinary.com/dlywrsigk/image/upload/v1772451373/PIA11141_large_dmq0wy.jpg"
+  },
+  {
+    "name": "Sirius",
+    "type": "Étoile",
+    "description": "L'étoile la plus brillante du ciel nocturne, 25 fois plus lumineuse que le Soleil. Elle est en réalité un système de deux étoiles, Sirius A et Sirius B.",
+    "rarity_level": "Commune",
+    "magnitude": -1.46,
+    "imageUrl": "https://res.cloudinary.com/dlywrsigk/image/upload/v1772451595/STScI-01EVT7Z416PH8S7BGJQZH87ARV_uaj7o1.jpg"
+  },
+
+  {
+    "name": "Galaxie d'Andromède",
+    "type": "Galaxie",
+    "description": "La galaxie la plus lointaine visible à l'oeil nu, à 2,5 millions d'années-lumière. Elle fonce vers la Voie Lactée et entrera en collision avec elle dans 4,5 milliards d'années.",
+    "rarity_level": "Épique",
+    "magnitude": 3.4,
+    "imageUrl": "https://res.cloudinary.com/dlywrsigk/image/upload/v1772453593/PIA15416_large_drrgme.jpg"
+  },
+  {
+    "name": "Nébuleuse d'Orion",
+    "type": "Nébuleuse",
+    "description": "Une pouponnière d'étoiles où de nouvelles étoiles naissent en ce moment même. Elle est visible à l'oeil nu comme une légère tache floue dans la constellation d'Orion.",
+    "rarity_level": "Épique",
+    "magnitude": 4.0,
+    "imageUrl": "https://res.cloudinary.com/dlywrsigk/image/upload/v1772450887/media-dtjah6-695aca8454a17913380441_rw38ix.jpg"
+  },
+  {
+    "name": "Uranus",
+    "type": "Planète",
+    "description": "Contrairement aux autres planètes qui tournent comme des toupies, Uranus est complètement inclinée sur le côté. Elle roule littéralement sur son orbite, probablement à cause d'une collision géante dans le passé.",
+    "rarity_level": "Épique",
+    "magnitude": 5.7,
+    "imageUrl": "https://res.cloudinary.com/dlywrsigk/image/upload/v1772450851/PIA18182_orig_yuiygw.jpg"
+  },
+  {
+    "name": "Neptune",
+    "type": "Planète",
+    "description": "À cause de la pression extrême et de la composition de son atmosphère, les scientifiques pensent qu'il pleut des diamants au coeur de Neptune. Un vrai coffre-fort géant.",
+    "rarity_level": "Légendaire",
+    "magnitude": 7.8,
+    "imageUrl": "https://res.cloudinary.com/dlywrsigk/image/upload/v1772450873/PIA01492_large_rf3ub8.jpg"
+  }
+]

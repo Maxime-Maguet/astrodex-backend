@@ -6,7 +6,6 @@ email : String,
 password: String,
 token : String,
 xp : Number,
-bcrypt : Number,
 equipement : String,
 discoversAstres : {type: mongoose.Schema.Types.ObjectId, ref : "astres"}
 

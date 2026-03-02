@@ -2,8 +2,8 @@ var express = require("express");
 var router = express.Router();
 const User = require("../models/users");
 const { checkBody } = require("../modules/checkBody");
-const { hash } = require("bcrypt");
 const uid2 = require("uid2");
+const bcrypt = require('bcrypt');
 
 //route Signup pour la premiere connexion du client
 
@@ -17,6 +17,7 @@ router.post("/signup", (req, res) => {
 
   useStore.findOne({ username: req.body.username }).then(data => {
     if (data === null) {
+
       const hash = bcrypt.hashSync("password", 10);
 
       const newUser = new User({
@@ -24,7 +25,6 @@ router.post("/signup", (req, res) => {
         password: hash,
         token: uid2(32),
       });
-
 
 // création de l'utilisateur avec le .save()
 

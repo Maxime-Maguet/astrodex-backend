@@ -10,6 +10,10 @@ require("./models/connection");
 var indexRouter = require("./routes/index");
 var usersRouter = require("./routes/users");
 var astresRouter = require("./routes/astres");
+<<<<<<< HEAD
+=======
+
+>>>>>>> ee5cb71db8e519e1818c9fd9edb34cdb77531f35
 var app = express();
 const fileUpload = require("express-fileupload");
 app.use(fileUpload());
@@ -23,4 +27,8 @@ app.use(express.static(path.join(__dirname, "public")));
 app.use("/", indexRouter);
 app.use("/users", usersRouter);
 app.use("/astres", astresRouter);
+<<<<<<< HEAD
+=======
+
+>>>>>>> ee5cb71db8e519e1818c9fd9edb34cdb77531f35
 module.exports = app;

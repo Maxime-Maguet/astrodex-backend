@@ -20,6 +20,16 @@ User.findOne ({ token: req.params.token }).then(user => {
         }
             });
         });
+router.get("/", (req, res) => {
+  Astre.find()
+    .then((data) => {
+      res.json({ result: true, astres: data });
+    })
+    .catch((error) => {
+      res.json({ result: false, error: error.message });
+    });
+});
+
 module.exports = router;
 //id user et id planete avec find one et update res.json (astres capturé), par rapport a id de l'astre si discover include id de l'adstre
 // astre deja capturé si id trouvé, utiliser findbyid

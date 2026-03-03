@@ -16,7 +16,7 @@ router.post("/signup", (req, res) => {
 
   // trouver si l'utilisateur existe déjà en BDD sinon le créer
 
-  User.findOne({ username: req.body.username }).then(data => {
+  User.findOne({ email: req.body.email }).then(data => {
     if (data === null) {
 
       const hash = bcrypt.hashSync(req.body.password, 10);
@@ -31,7 +31,7 @@ router.post("/signup", (req, res) => {
 // création de l'utilisateur avec le .save()
 
       newUser.save().then(newDoc => {
-        res.json({ result: true, token: newDoc.token, username: newDoc.username });
+        res.json({ result: true, token: newDoc.token, username: newDoc.email });
       });
     } else {
         // Faux si utilisateur déjà crée 

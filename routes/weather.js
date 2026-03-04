@@ -1,10 +1,6 @@
-import express from "express";
-import fetch from "node-fetch";
-import dotenv from "dotenv";
-dotenv.config();
-
-const router = express.Router();
-
+var express = require("express");
+var router = express.Router();
+const WEATHER_KEY = process.env.OPENWEATHER_API_KEY;
 //route GET avec latitude et longitude
 router.get("/", async (req, res) => {
   const { lat, lon } = req.query;
@@ -15,7 +11,7 @@ router.get("/", async (req, res) => {
 
   try {
     const response = await fetch(
-      `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${process.env.WEATHER_KEY}&units=metric`
+      `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${WEATHER_KEY}&units=metric`,
     );
     const data = await response.json();
 
@@ -31,4 +27,4 @@ router.get("/", async (req, res) => {
   }
 });
 
-export default router;
+module.exports = router;

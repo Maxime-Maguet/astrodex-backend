@@ -100,7 +100,7 @@ router.get("/profile/:token", (req, res) => {
           user: {
             name: user.username,
             xp: user.xp,
-            capuredAstres: user.discoversAstres,
+            capturedAstres: user.discoversAstres,
             equipement: user.equipement,
           },
         });

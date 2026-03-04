@@ -90,4 +90,24 @@ router.put("/updateUser", (req, res) => {
   });
 });
 
+router.get("/profile/:token", (req, res) => {
+  User.findOne({ token: req.params.token })
+    .populate("discoversAstres")
+    .then((user) => {
+      if (user) {
+        res.json({
+          result: true,
+          user: {
+            name: user.username,
+            xp: user.xp,
+            capuredAstres: user.discoversAstres,
+            equipement: user.equipement,
+          },
+        });
+      } else {
+        res.json({ result: false, error: "User not found" });
+      }
+    });
+});
+
 module.exports = router;

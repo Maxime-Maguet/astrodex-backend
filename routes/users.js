@@ -3,8 +3,7 @@ var router = express.Router();
 const User = require("../models/users");
 const { checkBody } = require("../modules/checkBody");
 const uid2 = require("uid2");
-const bcrypt = require('bcrypt');
-
+const bcrypt = require("bcrypt");
 
 //route Signup pour la premiere connexion du client
 
@@ -16,9 +15,8 @@ router.post("/signup", (req, res) => {
 
   // trouver si l'utilisateur existe déjà en BDD sinon le créer
 
-  User.findOne({ email: req.body.email }).then(data => {
+  User.findOne({ email: req.body.email }).then((data) => {
     if (data === null) {
-
       const hash = bcrypt.hashSync(req.body.password, 10);
 
       const newUser = new User({
@@ -28,48 +26,68 @@ router.post("/signup", (req, res) => {
         token: uid2(32),
       });
 
-// création de l'utilisateur avec le .save()
+      // création de l'utilisateur avec le .save()
 
-      newUser.save().then(newDoc => {
+      newUser.save().then((newDoc) => {
         res.json({ result: true, token: newDoc.token, email: newDoc.email });
       });
     } else {
-        // Faux si utilisateur déjà crée 
-res.json({result: false, error: 'Users already Exists'});
-
-}
+      // Faux si utilisateur déjà crée
+      res.json({ result: false, error: "Users already Exists" });
+    }
   });
 });
 
 //POST /users/signin
 router.post("/signin", (req, res) => {
-const { username, password } = req.body;
+  const { username, password } = req.body;
 
-//verif champs remplis
-if(!username || !password ) {
+  //verif champs remplis
+  if (!username || !password) {
     return res.json({ result: false, error: "Empty or Invalid Fields" });
-}
-//identification de l'utilisateur via username
-User.findOne({ username: username }).then(data => {
+  }
+  //identification de l'utilisateur via username
+  User.findOne({ username: username }).then((data) => {
     //utilisateur existe
     if (!data) {
-        //username n'existe pas
-        return res.json({ result: false, error: "Username does not exist" });
+      //username n'existe pas
+      return res.json({ result: false, error: "Username does not exist" });
     }
 
     //utilisateur existe, on vérifie le mot de passe
     if (bcrypt.compareSync(password, data.password)) {
-        res.json({ 
-            result: true, 
-            token: data.token,
-            username: data.username 
-        });
+      res.json({
+        result: true,
+        token: data.token,
+        username: data.username,
+      });
     } else {
-        //mdp est faux
-        res.json({ result: false, error: "Incorrect password" });
+      //mdp est faux
+      res.json({ result: false, error: "Incorrect password" });
     }
+  });
 });
+
+router.put("/updateUser", (req, res) => {
+  User.findOne({ token: req.body.token }).then((user) => {
+    if (!user) {
+      return res.json({ result: false, error: "user not found" });
+    }
+    if (req.body.equipement) user.equipement = req.body.equipement;
+    if (req.body.xp) user.xp = user.xp + Number(req.body.xp);
+    user
+      .save()
+      .then((userUpdate) => {
+        res.json({
+          result: true,
+          equipement: userUpdate.equipement,
+          xp: userUpdate.xp,
+        });
+      })
+      .catch((err) => {
+        res.json({ result: false, error: "Invalid equipment" });
+      });
+  });
 });
 
 module.exports = router;
-

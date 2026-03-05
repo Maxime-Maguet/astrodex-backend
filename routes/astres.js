@@ -4,21 +4,23 @@ const Astre = require("../models/astres");
 const User = require("../models/users");
 
 router.put("/capturer", (req, res) => {
-  User.findById(req.body.userId).then((user) => {
-    if (!user) {
-      return res.json({ result: false, error: "User not found" });
-    }
-    if (user.discoversAstres.includes(req.body.astreId)) {
-      res.json({ result: false, message: "Astre déjà capturé !" });
-    } else {
-      user.discoversAstres.push(req.body.astreId);
-      user.save().then((user) => {
-        user.populate("discoversAstres").then((userAstres) => {
-          res.json({ result: true, user: userAstres });
+  User.findOne({ token: req.body.token })
+    .then((user) => {
+      if (!user) {
+        return res.json({ result: false, error: "User not found" });
+      }
+      if (user.discoversAstres.includes(req.body.astreId)) {
+        res.json({ result: false, message: "Astre déjà capturé !" });
+      } else {
+        user.discoversAstres.push(req.body.astreId);
+        user.save().then((user) => {
+          user.populate("discoversAstres").then((userAstres) => {
+            res.json({ result: true, user: userAstres });
+          });
         });
-      });
-    }
-  });
+      }
+    })
+    .catch((err) => res.json({ result: false, error: err.message }));
 });
 
 router.get("/", (req, res) => {
@@ -31,9 +33,9 @@ router.get("/", (req, res) => {
     });
 });
 
-router.delete("/:userId/:astreId", (req, res) => {
-  User.findByIdAndUpdate(
-    req.params.userId,
+router.delete("/:token/:astreId", (req, res) => {
+  User.findOneAndUpdate(
+    { token: req.params.token },
     { $pull: { discoversAstres: req.params.astreId } },
     { new: true },
   )
@@ -43,6 +45,7 @@ router.delete("/:userId/:astreId", (req, res) => {
         return res.json({ result: false, message: "User not find" });
       }
       res.json({ result: true, user: userUpdate });
-    });
+    })
+    .catch((err) => res.json({ result: false, error: err.message }));
 });
 module.exports = router;

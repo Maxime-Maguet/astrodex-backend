@@ -15,7 +15,7 @@ router.post("/signup", (req, res) => {
 
   // trouver si l'utilisateur existe déjà en BDD sinon le créer
 
-  User.findOne({ email: req.body.email, username: req.body.username }).then(
+  User.findOne({$or:[ {username: req.body.username}, {email: req.body.email} ]}).then(
     data => {
       if (data === null) {
         const hash = bcrypt.hashSync(req.body.password, 10);
@@ -36,10 +36,13 @@ router.post("/signup", (req, res) => {
             email: newDoc.email,
             username: newDoc.username,
           });
+        })
+.catch(err => {
+          res.json({ result: false, error: "User already exists" });
         });
       } else {
         // Faux si utilisateur déjà crée
-        res.json({ result: false, error: "Users already Exists" });
+res.json({ result: false, error: "Users already Exists" });
       }
     },
   );

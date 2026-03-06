@@ -6,6 +6,7 @@ router.get("/", async (req, res) => {
   const { lat, lon } = req.query;
 
   if (!lat || !lon) {
+    // return res.status(400).json({ error: "wrong message" }); // test erreur
     return res.status(400).json({ error: "required latitude and longitude" });
   }
 

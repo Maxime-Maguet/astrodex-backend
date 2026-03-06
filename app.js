@@ -11,6 +11,7 @@ var indexRouter = require("./routes/index");
 var usersRouter = require("./routes/users");
 var astresRouter = require("./routes/astres");
 var weatherRouter = require('./routes/weather');
+
 var app = express();
 const fileUpload = require("express-fileupload");
 app.use(fileUpload());

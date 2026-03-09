@@ -15,21 +15,24 @@ router.post("/signup", (req, res) => {
 
   // trouver si l'utilisateur existe déjà en BDD sinon le créer
 
-  User.findOne({$or:[ {username: req.body.username}, {email: req.body.email} ]}).then(
-    data => {
-      if (data === null) {
-        const hash = bcrypt.hashSync(req.body.password, 10);
+  User.findOne({
+    $or: [{ username: req.body.username }, { email: req.body.email }],
+  }).then(data => {
+    if (data === null) {
+      const hash = bcrypt.hashSync(req.body.password, 10);
 
-        const newUser = new User({
-          username: req.body.username,
-          email: req.body.email,
-          password: hash,
-          token: uid2(32),
-        });
+      const newUser = new User({
+        username: req.body.username,
+        email: req.body.email,
+        password: hash,
+        token: uid2(32),
+      });
 
-        // création de l'utilisateur avec le .save()
+      // création de l'utilisateur avec le .save()
 
-        newUser.save().then(newDoc => {
+      newUser
+        .save()
+        .then(newDoc => {
           res.json({
             result: true,
             token: newDoc.token,
@@ -37,17 +40,15 @@ router.post("/signup", (req, res) => {
             username: newDoc.username,
           });
         })
-.catch(err => {
+        .catch(err => {
           res.json({ result: false, error: "User already exists" });
         });
-      } else {
-        // Faux si utilisateur déjà crée
-res.json({ result: false, error: "Users already Exists" });
-      }
-    },
-  );
+    } else {
+      // Faux si utilisateur déjà crée
+      res.json({ result: false, error: "Users already Exists" });
+    }
+  });
 });
-
 
 //POST /users/signin
 router.post("/signin", (req, res) => {
@@ -104,7 +105,7 @@ router.put("/updateUser", (req, res) => {
 router.get("/profile/:token", (req, res) => {
   User.findOne({ token: req.params.token })
     .populate("discoversAstres")
-    .then((user) => {
+    .then(user => {
       if (user) {
         res.json({
           result: true,
@@ -119,6 +120,37 @@ router.get("/profile/:token", (req, res) => {
         res.json({ result: false, error: "User not found" });
       }
     });
+});
+
+router.post("/upload", async (req, res) => {
+  const photoPath = `./tmp/${uniqid()}.jpg`;
+
+  console.log(req.files);
+
+  const resultMove = await req.files.photoFromFront.mv(photoPath);
+
+  if (!resultMove) {
+    const resultCloudinary = await cloudinary.uploader.upload(photoPath);
+
+    fs.unlinkSync(photoPath);
+
+    const user = await User.findOne({ token: req.body.token });
+
+    if (!user) {
+      return res.json({ result: false, error: "User not found" });
+    }
+
+    user.avatar = resultCloudinary.secure_url;
+
+    await user.save();
+
+    res.json({
+      result: true,
+      avatar: resultCloudinary.secure_url,
+    });
+  } else {
+    res.json({ result: false, error: resultMove });
+  }
 });
 
 module.exports = router;

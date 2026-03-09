@@ -1,10 +1,14 @@
 const mongoose = require("mongoose");
 
 const userSchema = mongoose.Schema({
-  username: { type: String, unique: true},
-  email: { type: String, unique: true},
+  username: { type: String, unique: true },
+  email: { type: String, unique: true },
   password: String,
   token: String,
+  avatar: {
+    type: String,
+    default: null,
+  },
   xp: { type: Number, default: 0 },
   equipement: {
     type: String,

@@ -10,6 +10,12 @@ const astreSchema = mongoose.Schema({
   },
   magnitude: Number,
   imageUrl: String,
+  lore: String,
+  stats: {
+    distance: String,
+    masse: String,
+    diametre: String,
+  },
 });
 
 const Astre = mongoose.model("astres", astreSchema);

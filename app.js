@@ -4,15 +4,22 @@ var path = require("path");
 var cookieParser = require("cookie-parser");
 var logger = require("morgan");
 const cors = require("cors");
+const fs = require("fs");
 
 require("./models/connection");
 
 var indexRouter = require("./routes/index");
 var usersRouter = require("./routes/users");
 var astresRouter = require("./routes/astres");
-var weatherRouter = require('./routes/weather');
+var weatherRouter = require("./routes/weather");
 
 var app = express();
+
+const tmpDir = path.join(__dirname, "tmp");
+if (!fs.existsSync(tmpDir)) {
+  fs.mkdirSync(tmpDir);
+}
+
 const fileUpload = require("express-fileupload");
 app.use(fileUpload());
 app.use(cors());
@@ -25,5 +32,5 @@ app.use(express.static(path.join(__dirname, "public")));
 app.use("/", indexRouter);
 app.use("/users", usersRouter);
 app.use("/astres", astresRouter);
-app.use('/weather', weatherRouter);
+app.use("/weather", weatherRouter);
 module.exports = app;

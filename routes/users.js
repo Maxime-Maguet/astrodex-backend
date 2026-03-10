@@ -116,6 +116,7 @@ router.get("/profile/:token", (req, res) => {
             xp: user.xp,
             capturedAstres: user.discoversAstres,
             equipement: user.equipement,
+            capturedDates: user.capturedDates,
           },
         });
       } else {

@@ -16,6 +16,12 @@ const userSchema = mongoose.Schema({
     default: "None",
   },
   discoversAstres: [{ type: mongoose.Schema.Types.ObjectId, ref: "astres" }],
+  capturedDates: [
+    {
+      astreId: { type: mongoose.Schema.Types.ObjectId, ref: "astres" },
+      capturedAt: { type: Date, default: Date.now },
+    },
+  ],
 });
 
 const User = mongoose.model("users", userSchema);

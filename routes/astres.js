@@ -5,7 +5,7 @@ const User = require("../models/users");
 
 router.put("/capturer", (req, res) => {
   User.findOne({ token: req.body.token })
-    .then(user => {
+    .then((user) => {
       if (!user) {
         return res.json({ result: false, error: "User not found" });
       }
@@ -13,22 +13,23 @@ router.put("/capturer", (req, res) => {
         res.json({ result: false, message: "Astre déjà capturé !" });
       } else {
         user.discoversAstres.push(req.body.astreId);
-        user.save().then(user => {
-          user.populate("discoversAstres").then(userAstres => {
+        user.capturedDates.push({ astreId: req.body.astreId });
+        user.save().then((user) => {
+          user.populate("discoversAstres").then((userAstres) => {
             res.json({ result: true, user: userAstres });
           });
         });
       }
     })
-    .catch(err => res.json({ result: false, error: err.message }));
+    .catch((err) => res.json({ result: false, error: err.message }));
 });
 
 router.get("/", (req, res) => {
   Astre.find()
-    .then(data => {
+    .then((data) => {
       res.json({ result: true, astres: data });
     })
-    .catch(error => {
+    .catch((error) => {
       res.json({ result: false, error: error.message });
     });
 });
@@ -40,21 +41,21 @@ router.delete("/:token/:astreId", (req, res) => {
     { new: true },
   )
     .populate("discoversAstres")
-    .then(userUpdate => {
+    .then((userUpdate) => {
       if (!userUpdate) {
         return res.json({ result: false, message: "User not find" });
       }
       res.json({ result: true, user: userUpdate });
     })
-    .catch(err => res.json({ result: false, error: err.message }));
+    .catch((err) => res.json({ result: false, error: err.message }));
 });
 
 router.get("/info", (req, res) => {
   fetch(
     `https://api.nasa.gov/planetary/apod?api_key=${process.env.INFONASA_API_KEY}`,
   )
-    .then(response => response.json())
-    .then(data => {
+    .then((response) => response.json())
+    .then((data) => {
       res.json({
         title: data.title,
         image: data.url,

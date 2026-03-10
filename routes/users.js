@@ -148,7 +148,7 @@ router.post("/upload", async (req, res) => {
     user.avatar = resultCloudinary.secure_url;
 
     await user.save();
-    console.log("AVATAR SAVED:", user.avatar);
+    
 
     res.json({
       result: true,

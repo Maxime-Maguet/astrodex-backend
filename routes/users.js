@@ -81,8 +81,6 @@ router.post("/signin", (req, res) => {
         equipement: data.equipement,
       });
     } else {
-      console.log("USER LOGIN:", data);
-      //mdp est faux
       res.json({ result: false, error: "Incorrect password" });
     }
   });

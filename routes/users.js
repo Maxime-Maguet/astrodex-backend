@@ -19,7 +19,7 @@ router.post("/signup", (req, res) => {
 
   User.findOne({
     $or: [{ username: req.body.username }, { email: req.body.email }],
-  }).then(data => {
+  }).then((data) => {
     if (data === null) {
       const hash = bcrypt.hashSync(req.body.password, 10);
 
@@ -34,16 +34,17 @@ router.post("/signup", (req, res) => {
 
       newUser
         .save()
-        .then(newDoc => {
+        .then((newDoc) => {
           res.json({
             result: true,
             token: newDoc.token,
             email: newDoc.email,
             username: newDoc.username,
             xp: newDoc.xp,
+            equipement: newDoc.equipement,
           });
         })
-        .catch(err => {
+        .catch((err) => {
           res.json({ result: false, error: "User already exists" });
         });
     } else {
@@ -62,7 +63,7 @@ router.post("/signin", (req, res) => {
     return res.json({ result: false, error: "Empty or Invalid Fields" });
   }
   //identification de l'utilisateur via username
-  User.findOne({ username: username }).then(data => {
+  User.findOne({ username: username }).then((data) => {
     //utilisateur existe
     if (!data) {
       //username n'existe pas
@@ -77,6 +78,7 @@ router.post("/signin", (req, res) => {
         username: data.username,
         xp: data.xp,
         avatar: data.avatar,
+        equipement: data.equipement,
       });
     } else {
       console.log("USER LOGIN:", data);
@@ -87,7 +89,7 @@ router.post("/signin", (req, res) => {
 });
 
 router.put("/updateUser", (req, res) => {
-  User.findOne({ token: req.body.token }).then(user => {
+  User.findOne({ token: req.body.token }).then((user) => {
     if (!user) {
       return res.json({ result: false, error: "user not found" });
     }
@@ -95,14 +97,14 @@ router.put("/updateUser", (req, res) => {
     if (req.body.xp) user.xp = user.xp + Number(req.body.xp);
     user
       .save()
-      .then(userUpdate => {
+      .then((userUpdate) => {
         res.json({
           result: true,
           equipement: userUpdate.equipement,
           xp: userUpdate.xp,
         });
       })
-      .catch(err => {
+      .catch((err) => {
         res.json({ result: false, error: "Invalid equipment" });
       });
   });
@@ -111,7 +113,7 @@ router.put("/updateUser", (req, res) => {
 router.get("/profile/:token", (req, res) => {
   User.findOne({ token: req.params.token })
     .populate("discoversAstres")
-    .then(user => {
+    .then((user) => {
       if (user) {
         res.json({
           result: true,
@@ -148,7 +150,6 @@ router.post("/upload", async (req, res) => {
     user.avatar = resultCloudinary.secure_url;
 
     await user.save();
-    
 
     res.json({
       result: true,

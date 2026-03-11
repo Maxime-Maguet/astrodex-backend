@@ -12,8 +12,8 @@ const userSchema = mongoose.Schema({
   xp: { type: Number, default: 0 },
   equipement: {
     type: String,
-    enum: ["None", "Oeil nu", "Jumelles", "Lunette astronomique"],
-    default: "None",
+    enum: ["Oeil nu", "Jumelles", "Telescope"],
+    default: "Oeil nu",
   },
   discoversAstres: [{ type: mongoose.Schema.Types.ObjectId, ref: "astres" }],
   capturedDates: [

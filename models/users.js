@@ -12,7 +12,7 @@ const userSchema = mongoose.Schema({
   xp: { type: Number, default: 0 },
   equipement: {
     type: String,
-    enum: ["Oeil nu", "Jumelles", "Lunette astronomique"],
+    enum: ["Oeil nu", "Jumelles", "Telescope"],
     default: "Oeil nu",
   },
   discoversAstres: [{ type: mongoose.Schema.Types.ObjectId, ref: "astres" }],

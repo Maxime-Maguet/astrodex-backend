@@ -64,4 +64,36 @@ router.get("/info", (req, res) => {
     });
 });
 
+// Nous avons voulu ajouter la traduction du texte, mais nous n'avons pas trouvé d'API gratuite
+
+// router.get("/info", (req, res) => {
+//   fetch(
+//     `https://api.nasa.gov/planetary/apod?api_key=${process.env.INFONASA_API_KEY}`,
+//   )
+//     .then(response => response.json())
+//     .then(data => {
+//       fetch("https://libretranslate.com/translate", {
+//         method: "POST",
+//         headers: { "Content-Type": "application/json" },
+//         body: JSON.stringify({
+//           q: data.explanation,
+//           source: "auto",
+//           target: "fr",
+//           format: "text",
+//         }),
+//       })
+//         .then(response => response.json())
+//         .then(trad => { console.log(trad);
+//           res.json({
+//             title: data.title,
+//             image: data.url,
+//             description:  trad.translatedText,
+//           });
+//         });
+//     });
+// });
+
+
+
+
 module.exports = router;

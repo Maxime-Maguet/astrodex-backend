@@ -59,7 +59,7 @@ router.get("/info", (req, res) => {
       res.json({
         title: data.title,
         image: data.url,
-        description: data.explanation,
+        
       });
     });
 });

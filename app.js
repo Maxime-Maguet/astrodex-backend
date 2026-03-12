@@ -15,9 +15,9 @@ var weatherRouter = require("./routes/weather");
 
 var app = express();
 
-const tmpDir = path.join(__dirname, "tmp");
+const tmpDir = "/tmp/uploads";
 if (!fs.existsSync(tmpDir)) {
-  fs.mkdirSync(tmpDir);
+  fs.mkdirSync(tmpDir, { recursive: true });
 }
 
 const fileUpload = require("express-fileupload");

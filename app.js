@@ -15,6 +15,8 @@ var weatherRouter = require("./routes/weather");
 
 var app = express();
 
+app.get("/favicon.ico", (req, res) => res.status(204).end());
+
 const tmpDir = "/tmp/uploads";
 if (!fs.existsSync(tmpDir)) {
   fs.mkdirSync(tmpDir, { recursive: true });

@@ -42,6 +42,7 @@ router.post("/signup", (req, res) => {
             username: newDoc.username,
             xp: newDoc.xp,
             equipement: newDoc.equipement,
+            avatar: null,
           });
         })
         .catch((err) => {
@@ -121,6 +122,7 @@ router.get("/profile/:token", (req, res) => {
             capturedAstres: user.discoversAstres,
             equipement: user.equipement,
             capturedDates: user.capturedDates,
+            avatar: user.avatar,
           },
         });
       } else {

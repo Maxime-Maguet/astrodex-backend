@@ -91,7 +91,10 @@ router.put("/updateUser", (req, res) => {
     if (!user) {
       return res.json({ result: false, error: "user not found" });
     }
+    //  MISE À JOUR ÉQUIPEMENT : Si on reçoit un équipement, on remplace l'ancien
     if (req.body.equipement) user.equipement = req.body.equipement;
+    // CALCUL XP : On ajoute les nouveaux points à l'ancien score
+    // Le Number() est très important ici pour éviter que "10" + "10" ne fasse "1010"
     if (req.body.xp) user.xp = user.xp + Number(req.body.xp);
     user
       .save()

@@ -37,7 +37,11 @@ router.get("/", (req, res) => {
 router.delete("/:token/:astreId", (req, res) => {
   User.findOneAndUpdate(
     { token: req.params.token },
+    // $pull : C'est l'opérateur surpuissant de MongoDB pour les tableaux.
+    // Il retire l'ID de l'astre du tableau 'discoversAstres' sans toucher aux autres.
     { $pull: { discoversAstres: req.params.astreId } },
+    // { new: true } : Indispensable pour que MongoDB renvoie l'utilisateur 
+    // APRÈS la suppression, et non pas l'ancienne version.
     { new: true },
   )
     .populate("discoversAstres")

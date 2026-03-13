@@ -101,6 +101,7 @@ router.put("/updateUser", (req, res) => {
           result: true,
           equipement: userUpdate.equipement,
           xp: userUpdate.xp,
+          avatar: userUpdate.avatar,
         });
       })
       .catch((err) => {

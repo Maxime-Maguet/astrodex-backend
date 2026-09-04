@@ -4,9 +4,7 @@ const User = require("../models/users");
 const { checkBody } = require("../modules/checkBody");
 const uid2 = require("uid2");
 const bcrypt = require("bcrypt");
-const uniqid = require("uniqid");
 const cloudinary = require("cloudinary").v2;
-const fs = require("fs");
 //route Signup pour la premiere connexion du client
 
 router.post("/signup", (req, res) => {
@@ -136,31 +134,42 @@ router.get("/profile/:token", (req, res) => {
 });
 
 router.post("/upload", async (req, res) => {
-  const photoPath = `/tmp/uploads/${uniqid()}.jpg`;
+  try {
+    if (!req.files || !req.files.photoFromFront) {
+      return res.json({ result: false, error: "No photo uploaded" });
+    }
+    if (!req.body.token) {
+      return res.json({ result: false, error: "Missing token" });
+    }
 
-  const resultMove = await req.files.photoFromFront.mv(photoPath);
+    const photo = Array.isArray(req.files.photoFromFront)
+      ? req.files.photoFromFront[0]
+      : req.files.photoFromFront;
 
-  if (!resultMove) {
-    const resultCloudinary = await cloudinary.uploader.upload(photoPath);
+    if (!photo.data || !photo.data.length) {
+      return res.json({ result: false, error: "Empty photo" });
+    }
 
-    fs.unlinkSync(photoPath);
+    const mimeType = photo.mimetype || "image/jpeg";
+    const resultCloudinary = await cloudinary.uploader.upload(
+      `data:${mimeType};base64,${photo.data.toString("base64")}`,
+    );
 
     const user = await User.findOne({ token: req.body.token });
-
     if (!user) {
       return res.json({ result: false, error: "User not found" });
     }
 
     user.avatar = resultCloudinary.secure_url;
-
     await user.save();
 
     res.json({
       result: true,
       avatar: resultCloudinary.secure_url,
     });
-  } else {
-    res.json({ result: false, error: resultMove });
+  } catch (error) {
+    console.error("❌ Upload error:", error);
+    res.json({ result: false, error: "Upload failed" });
   }
 });
 

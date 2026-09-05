@@ -135,25 +135,29 @@ router.get("/profile/:token", (req, res) => {
 
 router.post("/upload", async (req, res) => {
   try {
-    if (!req.files || !req.files.photoFromFront) {
-      return res.json({ result: false, error: "No photo uploaded" });
-    }
     if (!req.body.token) {
       return res.json({ result: false, error: "Missing token" });
     }
 
-    const photo = Array.isArray(req.files.photoFromFront)
-      ? req.files.photoFromFront[0]
-      : req.files.photoFromFront;
+    let dataUri = null;
 
-    if (!photo.data || !photo.data.length) {
-      return res.json({ result: false, error: "Empty photo" });
+    if (req.body.photo) {
+      const mimeType = req.body.mimeType || "image/jpeg";
+      dataUri = `data:${mimeType};base64,${req.body.photo}`;
+    } else if (req.files && req.files.photoFromFront) {
+      const photo = Array.isArray(req.files.photoFromFront)
+        ? req.files.photoFromFront[0]
+        : req.files.photoFromFront;
+      if (!photo.data || !photo.data.length) {
+        return res.json({ result: false, error: "Empty photo" });
+      }
+      const mimeType = photo.mimetype || "image/jpeg";
+      dataUri = `data:${mimeType};base64,${photo.data.toString("base64")}`;
+    } else {
+      return res.json({ result: false, error: "No photo uploaded" });
     }
 
-    const mimeType = photo.mimetype || "image/jpeg";
-    const resultCloudinary = await cloudinary.uploader.upload(
-      `data:${mimeType};base64,${photo.data.toString("base64")}`,
-    );
+    const resultCloudinary = await cloudinary.uploader.upload(dataUri);
 
     const user = await User.findOne({ token: req.body.token });
     if (!user) {
